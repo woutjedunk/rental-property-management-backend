@@ -1,7 +1,7 @@
 import { RentalProperty } from "@domain/rentalProperty.ts";
 
-export interface RentalPropertyRepo {
+export interface IRentalPropertyRepo {
     getAll(): RentalProperty[];
-    getById(): RentalProperty;
+    getById(id: string): RentalProperty | undefined;
     save(rentalProperty: RentalProperty): RentalProperty
 }
