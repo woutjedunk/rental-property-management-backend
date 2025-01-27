@@ -1,4 +1,4 @@
-import { UUID } from "node:crypto";
+import { randomUUID, UUID } from "node:crypto";
 import { Address } from "@domain/valueObjects/address.ts";
 
 
@@ -23,7 +23,7 @@ export class RentalProperty {
     }
 
     static from = ( 
-        id: UUID, 
+        id: UUID | undefined, 
         rentalOwner: string, 
         rentalName: string, 
         singleBeds: number, 
@@ -37,7 +37,7 @@ export class RentalProperty {
         busNumber?: string ): RentalProperty =>
     {
         const address = new Address( country, city, zipcode, street, houseNumber, busNumber);
-        return new RentalProperty( id, address, rentalOwner, rentalName, singleBeds, doublebeds, storage )
+        return new RentalProperty( id || randomUUID(), address, rentalOwner, rentalName, singleBeds, doublebeds, storage )
     }
 
     public changeAddress = ( country: string, city: string, zipCode: string, street: string, houseNumber: string, busNumber?: string ): void => {
