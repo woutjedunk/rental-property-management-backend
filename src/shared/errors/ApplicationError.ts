@@ -2,12 +2,10 @@
 
 export class ApplicationError extends Error {
 
-    public readonly applicationErrorResponse: string;
-    public readonly status: number;
+    public readonly httpStatusCode: number;
 
-    constructor(message: string, status: number, applicationErrorResponse: string) {
+    constructor(message: string, httpStatusCode: number) {
         super(message);
-        this.status = status;
-        this.applicationErrorResponse = applicationErrorResponse;
+        this.httpStatusCode = httpStatusCode;
     }
 }

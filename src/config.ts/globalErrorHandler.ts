@@ -6,7 +6,7 @@ import { ApplicationError } from '../shared/errors/ApplicationError.ts';
 export function GlobalErrorHandler(err: Error, req: Request, res: Response, next: NextFunction){
 
     if (err instanceof ApplicationError) {
-        res.status(err.status).send(err.applicationErrorResponse); // Bad request
+        res.status(err.httpStatusCode).send(err.message); // Bad request
     }
   
     next();
