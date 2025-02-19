@@ -2,7 +2,6 @@ import { AccomodetionRepository } from "@application/accomodation.repository.ts"
 import { RentalDomainAccomodation } from "@domain/accomodation/RentalDomainAccomodation.ts";
 import { randomUUID, UUID } from "node:crypto";
 import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
-import { IAccomodation } from "../../../domain/accomodation/IAccomodation.ts";
 
 export class RentalDomainAccomodationRepository implements AccomodetionRepository {
 
@@ -34,15 +33,19 @@ export class RentalDomainAccomodationRepository implements AccomodetionRepositor
         ];
     }
 
-    get = async (id: UUID): Promise<RentalDomainAccomodation> => {
+    async get(id: UUID): Promise<RentalDomainAccomodation> {
         return this.repo.find((accomodation) => accomodation.id === id) || null as unknown as RentalDomainAccomodation;
     }
 
-    save(accomodation: RentalDomainAccomodation): void {
+    async getAll(): Promise<RentalDomainAccomodation[]> {
+        return this.repo;
+    }
+
+    async save(accomodation: RentalDomainAccomodation) {
         this.repo.push(accomodation);
     }
 
-    delete(id: UUID): void {
+    async delete(id: UUID) {
         this.repo = this.repo.filter((accomodation) => accomodation.id !== id);
     }
 }
