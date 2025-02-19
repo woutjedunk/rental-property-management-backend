@@ -3,7 +3,7 @@ import { HasAddress } from "@domain/address/HasAddress.ts";
 import { UUID } from "node:crypto";
 import { Address } from "@domain/address/address.ts";
 
-export class StandaloneAccommodation implements IAccomodation, HasAddress {
+export class StandaloneAccomodation implements IAccomodation, HasAddress {
 
     readonly id: UUID;
     accomodationName: string;
