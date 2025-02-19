@@ -2,7 +2,7 @@ import { IAccomodation } from "@domain/accomodation/IAccomodation.ts";
 import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
 import { UUID } from "node:crypto";
 
-export class RentalDomainDomainAccomodation implements IAccomodation {
+export class RentalDomainAccomodation implements IAccomodation {
     readonly id: UUID;
     accomodationName: string;
     accomodationOwner: string;
