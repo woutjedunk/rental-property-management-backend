@@ -6,6 +6,7 @@
     NOT_FOUND: 'Not found',
     METHOD_NOT_ALLOWED: 'Method not allowed',
     INTERNAL_SERVER_ERROR: 'Internal server error',
+    NOT_IMPLEMENTED: 'Not implemented'
  }
 
 export const httpStatusCodes = {
@@ -15,4 +16,5 @@ export const httpStatusCodes = {
       NOT_FOUND: 404,
       METHOD_NOT_ALLOWED: 405,
       INTERNAL_SERVER_ERROR: 500,
+      NOT_IMPLEMENTED: 501
 }
