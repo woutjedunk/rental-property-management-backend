@@ -9,7 +9,7 @@ export class RentalDomainAccomodation implements IAccomodation {
     singleBeds: number;
     doubleBeds: number;
     storage: string;
-    rentalDomain: RentalDomain;
+    rentalDomain?: RentalDomain;
     location: string;
 
     constructor(id: UUID, accomodationName: string, accomodationOwner: string, singleBeds: number, doubleBeds: number, storage: string, rentalDomain: RentalDomain, location: string) {
