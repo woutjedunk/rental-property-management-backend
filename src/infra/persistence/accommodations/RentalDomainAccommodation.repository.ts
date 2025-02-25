@@ -1,16 +1,16 @@
 import { AccomodetionRepository } from "@application/accomodation.repository.ts";
-import { RentalDomainAccomodation } from "@domain/accomodation/RentalDomainAccomodation.ts";
+import { RentalDomainAccommodation } from "../../../domain/accomodation/RentalDomainAccommodation.ts";
 import { randomUUID, UUID } from "node:crypto";
 import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
 
 export class RentalDomainAccomodationRepository implements AccomodetionRepository {
 
 
-    private repo: RentalDomainAccomodation[] = [];
+    private repo: RentalDomainAccommodation[] = [];
 
     RentalDomainAccomodation() {
         this.repo = [
-            new RentalDomainAccomodation(
+            new RentalDomainAccommodation(
                 randomUUID(),
                 "Accomodation 1",
                 "Owner 1",
@@ -20,7 +20,7 @@ export class RentalDomainAccomodationRepository implements AccomodetionRepositor
                 null as unknown as RentalDomain,
                 "Location 1"
             ),
-            new RentalDomainAccomodation(
+            new RentalDomainAccommodation(
                 randomUUID(),
                 "Accomodation 2",
                 "Owner 2",
@@ -33,15 +33,15 @@ export class RentalDomainAccomodationRepository implements AccomodetionRepositor
         ];
     }
 
-    async get(id: UUID): Promise<RentalDomainAccomodation> {
-        return this.repo.find((accomodation) => accomodation.id === id) || null as unknown as RentalDomainAccomodation;
+    async get(id: UUID): Promise<RentalDomainAccommodation> {
+        return this.repo.find((accomodation) => accomodation.id === id) || null as unknown as RentalDomainAccommodation;
     }
 
-    async getAll(): Promise<RentalDomainAccomodation[]> {
+    async getAll(): Promise<RentalDomainAccommodation[]> {
         return this.repo;
     }
 
-    async save(accomodation: RentalDomainAccomodation) {
+    async save(accomodation: RentalDomainAccommodation) {
         this.repo.push(accomodation);
     }
 

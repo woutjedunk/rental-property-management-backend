@@ -1,26 +1,27 @@
 import { AccomodetionRepository } from "@application/accomodation.repository.ts";
-import { StandaloneAccomodation } from "@domain/accomodation/StandaloneAccomodation.ts";
+import { StandaloneAccommodation } from "../../../domain/accomodation/StandaloneAccommodation.ts";
 import { randomUUID, UUID } from "node:crypto";
 import { Address } from "@domain/address/address.ts";
+import { IAccommodation } from "../../../domain/accomodation/IAccommodation.ts";
 
-export class StandaloneAccomodationRepository implements AccomodetionRepository {
+export class BaseAccommodationRepository implements AccomodetionRepository {
 
 
-    private repo: StandaloneAccomodation[] = [];
+    private repo: IAccommodation[] = [];
 
     RentalDomainAccomodation() {
         this.repo = [
-            new StandaloneAccomodation(
+            new StandaloneAccommodation(
                 randomUUID(),
                 "Accomodation 1",
                 "Owner 1",
                 2,
                 1,
                 "Storage 1",
-                null as unknown as Address,
+                null as unknown as Address
                 
             ),
-            new StandaloneAccomodation(
+            new StandaloneAccommodation(
                 randomUUID(),
                 "Accomodation 2",
                 "Owner 2",
@@ -32,15 +33,15 @@ export class StandaloneAccomodationRepository implements AccomodetionRepository 
         ];
     }
 
-    async get(id: UUID): Promise<StandaloneAccomodation> {
-        return this.repo.find((accomodation) => accomodation.id === id) || null as unknown as StandaloneAccomodation;
+    async get(id: UUID): Promise<IAccommodation | null> {
+        return this.repo.find((accommodation) => accommodation.id === id) || null;
     }
 
-    async getAll(): Promise<StandaloneAccomodation[]> {
+    async getAll(): Promise<IAccommodation[]> {
         return this.repo;
     }
 
-    async save(accomodation: StandaloneAccomodation) {
+    async save(accomodation: IAccommodation) {
         this.repo.push(accomodation);
     }
 

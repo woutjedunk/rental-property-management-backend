@@ -1,9 +1,9 @@
 import { UUID } from "node:crypto";
 
-export interface IAccomodation {
+export interface IAccommodation {
     readonly id: UUID
-    accomodationName: string
-    accomodationOwner: string
+    accommodationName: string
+    accommodationOwner: string
     singleBeds: number
     doubleBeds: number
     storage: string

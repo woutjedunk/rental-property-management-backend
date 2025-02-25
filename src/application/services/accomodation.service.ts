@@ -1,18 +1,33 @@
-import { IAccomodation } from "@domain/accomodation/IAccomodation.ts";
-import { RentalDomainAccomodation } from "@domain/accomodation/RentalDomainAccomodation.ts";
-import { Address } from "@domain/address/address.ts";
-import { randomUUID } from "node:crypto";
-import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
-import { StandaloneAccommodation } from "@domain/accomodation/StandaloneAccomodation.ts";
+import { IAccommodation } from "../../domain/accomodation/IAccommodation.ts";
+import { RentalDomainAccommodation } from "../../domain/accomodation/RentalDomainAccommodation.ts";
+import { StandaloneAccommodation } from "../../domain/accomodation/StandaloneAccommodation.ts";
+import { BaseAccommodationRepository } from "../../infra/persistence/accommodations/StandaloneAccommodation.repository.ts";
+import { UUID } from "node:crypto";
+import { ApplicationError } from "../../shared/errors/ApplicationError.ts";
+import { applicationErrorResponses } from "../../shared/applicationResponses.ts";
+import { httpStatusCodes } from "../../shared/applicationResponses.ts";
 
+const repo = new BaseAccommodationRepository();
 
+async function CreateAccommodation(accomodation: IAccommodation) {
 
-function CreateAccomodation(accomodation: IAccomodation) {
-    if (accomodation instanceof RentalDomainAccomodation) {
-        // persist
-    } else if (accomodation instanceof StandaloneAccommodation) {
-        // persist
-    }
+    repo.save(accomodation);
 
-    throw new Error("Invalid accomodation type");
 }
+
+async function GetAccommodation(id: UUID): Promise<IAccommodation> {
+
+    const result = await repo.get(id);
+
+    if (!result) throw new ApplicationError(applicationErrorResponses.NOT_FOUND, httpStatusCodes.NOT_FOUND);
+
+    return result;
+}
+
+
+
+
+export { 
+    CreateAccommodation,
+    GetAccommodation
+ };

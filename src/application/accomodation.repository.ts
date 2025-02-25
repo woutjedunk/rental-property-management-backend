@@ -1,9 +1,9 @@
-import { IAccomodation } from "@domain/accomodation/IAccomodation.ts";
+import { IAccommodation } from "../domain/accomodation/IAccommodation.ts";
 import { UUID } from "node:crypto";
 
 export interface AccomodetionRepository {
-    get(accomodationId: UUID): Promise<IAccomodation>;
-    getAll(): Promise<IAccomodation[]>;
-    save(accomodation: IAccomodation): void;
-    delete(accomodationId: UUID): void;
+    get(accommodationId: UUID): Promise<IAccommodation | null>;
+    getAll(): Promise<IAccommodation[]>;
+    save(accommodation: IAccommodation): void;
+    delete(accommodationId: UUID): void;
 }
