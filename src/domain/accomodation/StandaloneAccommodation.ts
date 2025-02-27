@@ -1,29 +1,28 @@
 import { IAccommodation } from "./IAccommodation.ts";
-import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
+import { HasAddress } from "@domain/address/HasAddress.ts";
 import { UUID } from "node:crypto";
-import { IRoom } from "@domain/room/Room.ts";
+import { Address } from "@domain/address/address.ts";
+import { IRoom } from "../room/Room.ts";
 
-export class RentalDomainAccommodation implements IAccommodation {
+export class StandaloneAccommodation implements IAccommodation, HasAddress {
+
     readonly id: UUID;
     accommodationName: string;
     accommodationOwner: string;
     singleBeds: number;
     doubleBeds: number;
     storage: string;
-    rentalDomain?: RentalDomain;
-    location: string;
+    address: Address;
     rooms: IRoom[];
 
-    constructor(id: UUID, accommodationName: string, accommodationOwner: string, singleBeds: number, doubleBeds: number, storage: string, rentalDomain: RentalDomain, location: string, rooms: IRoom[]) {
+    constructor(id: UUID, accommodationName: string, accommodationOwner: string, singleBeds: number, doubleBeds: number, storage: string, address: Address, rooms: IRoom[]) {
         this.id = id;
         this.accommodationName = accommodationName;
         this.accommodationOwner = accommodationOwner;
         this.singleBeds = singleBeds;
         this.doubleBeds = doubleBeds;
         this.storage = storage;
-        this.rentalDomain = rentalDomain;
-        this.location = location;
+        this.address = address;
         this.rooms = rooms;
     }
-    
 }
