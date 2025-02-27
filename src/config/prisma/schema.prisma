@@ -8,18 +8,65 @@ generator client {
   output   = "../../../node_modules/.prisma/client"
 }
 
-model RentalProperty {
-    id          String      @id @db.Uuid
-    rentalOwner String      @db.VarChar(100)
-    rentalName  String      @db.VarChar(100)
-    singleBeds  Int
-    doubleBeds  Int
-    storage     String      @db.VarChar(100)
+model Accommodation {
+  id          String      @id @db.Uuid
+  accommodationOwner String      @db.VarChar(100)
+  accommodationlName  String      @db.VarChar(100)
+  rooms       Room[]
 
-    country     String      @db.VarChar(100)
-    city        String      @db.VarChar(100)
-    street      String      @db.VarChar(100)
-    zipcode     String      @db.VarChar(15)
-    houseNumber String      @db.VarChar(15)
-    busNumber   String?     @db.VarChar(15)
+  accommodationType  AccommodationType
+
+  country     String?      @db.VarChar(100)
+  city        String?     @db.VarChar(100)
+  street      String?     @db.VarChar(100)
+  zipcode     String?      @db.VarChar(15)
+  houseNumber String?      @db.VarChar(15)
+  busNumber   String?     @db.VarChar(15)
+
+  rentalDomain RentalDomain? @relation(fields: [rentalDomainId], references: [id])
+  rentalDomainId String?
+}
+
+model RentalDomain {
+  id          String      @id @db.Uuid
+  domainOwner String      @db.VarChar(100)
+  domainName  String      @db.VarChar(100)
+
+  country     String?      @db.VarChar(100)
+  city        String?     @db.VarChar(100)
+  street      String?     @db.VarChar(100)
+  zipcode     String?      @db.VarChar(15)
+  houseNumber String?      @db.VarChar(15)
+  busNumber   String?     @db.VarChar(15)
+
+  accommodations Accommodation[]
+}
+
+model Room {
+  id          String  @id @db.Uuid
+  roomType    RoomType
+  sink        Boolean
+  toilet      Boolean
+  shower      Boolean
+  bath        Boolean
+  singleBed   Int
+  doubleBed   Int
+  queenBed    Int
+  kingBed     Int
+
+  accommodationId String
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+}
+
+
+
+
+enum AccommodationType {
+  STANDALONE
+  DOMAIN_ACC
+}
+
+enum RoomType {
+  BATHROOM
+  BEDROOM
 }
