@@ -11,7 +11,8 @@ generator client {
 model Accommodation {
   id          String      @id @db.Uuid
   accommodationOwner String      @db.VarChar(100)
-  accommodationlName  String      @db.VarChar(100)
+  accommodationName  String      @db.VarChar(100)
+  storage     String      @db.VarChar(100)
   rooms       Room[]
 
   accommodationType  AccommodationType
@@ -25,6 +26,7 @@ model Accommodation {
 
   rentalDomain RentalDomain? @relation(fields: [rentalDomainId], references: [id])
   rentalDomainId String?
+  location    String?
 }
 
 model RentalDomain {
@@ -45,14 +47,14 @@ model RentalDomain {
 model Room {
   id          String  @id @db.Uuid
   roomType    RoomType
-  sink        Boolean
-  toilet      Boolean
-  shower      Boolean
-  bath        Boolean
-  singleBed   Int
-  doubleBed   Int
-  queenBed    Int
-  kingBed     Int
+  sink        Int?
+  toilet      Int?
+  shower      Int?
+  bath        Int?
+  singleBed   Int?
+  doubleBed   Int?
+  queenBed    Int?
+  kingBed     Int?
 
   accommodationId String
   accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
