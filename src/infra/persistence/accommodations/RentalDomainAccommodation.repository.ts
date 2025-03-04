@@ -1,51 +1,60 @@
 import { AccomodetionRepository } from "@application/accomodation.repository.ts";
 import { RentalDomainAccommodation } from "../../../domain/accomodation/RentalDomainAccommodation.ts";
-import { randomUUID, UUID } from "node:crypto";
-import { RentalDomain } from "@domain/rentalDomain/RentalDomain.ts";
+import { UUID } from "node:crypto";
+import prisma from "@config/prisma/db.ts";
+import { getAccommodationMapper } from "../../mappers/accomodation/accommodationMapper.registry.ts";
+import { IAccommodation } from "@domain/accomodation/IAccommodation.ts";
 
 export class RentalDomainAccomodationRepository implements AccomodetionRepository {
 
 
-    private repo: RentalDomainAccommodation[] = [];
+    private repo = prisma;
 
-    RentalDomainAccomodation() {
-        this.repo = [
-            new RentalDomainAccommodation(
-                randomUUID(),
-                "Accomodation 1",
-                "Owner 1",
-                2,
-                1,
-                "Storage 1",
-                null as unknown as RentalDomain,
-                "Location 1"
-            ),
-            new RentalDomainAccommodation(
-                randomUUID(),
-                "Accomodation 2",
-                "Owner 2",
-                3,
-                3,
-                "Storage 2",
-                null as unknown as RentalDomain,
-                "Location 2"
-            ),
-        ];
+    RentalDomainAccomodationRepository() {
     }
 
-    async get(id: UUID): Promise<RentalDomainAccommodation> {
-        return this.repo.find((accomodation) => accomodation.id === id) || null as unknown as RentalDomainAccommodation;
+
+    async get(id: UUID): Promise<RentalDomainAccommodation | null> {
+        const result = await this.repo.accommodation.findUnique({
+            where: {
+                id: id
+            },
+            include: {
+                rooms: true,
+                rentalDomain: true
+            }
+        })
+
+
+        return result 
+            ? getAccommodationMapper(result.accommodationType).toDomain(result)
+            : null;
     }
 
-    async getAll(): Promise<RentalDomainAccommodation[]> {
-        return this.repo;
+    async getAll(): Promise<IAccommodation[]> {
+
+        const result = await this.repo.accommodation.findMany({
+            include: {
+                rooms: true,
+                rentalDomain: true
+            }
+        })
+
+        return result.map((acc) => getAccommodationMapper(acc.accommodationType).toDomain(acc));
     }
 
-    async save(accomodation: RentalDomainAccommodation) {
-        this.repo.push(accomodation);
+    async save(accomodation: IAccommodation) {
+        const accomodationDb = getAccommodationMapper(accomodation.storage).toDb(accomodation);
+        await this.repo.accommodation.create({
+            data: accomodationDb
+        });
     }
 
     async delete(id: UUID) {
-        this.repo = this.repo.filter((accomodation) => accomodation.id !== id);
+        await this.repo.accommodation.delete({
+            where: {
+                id: id
+            }
+        })
     }
 }
