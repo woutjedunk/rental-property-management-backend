@@ -17,6 +17,7 @@
     "@persistence/": "./src/infra/persistence/",
     "@controller/": "./src/controller/",
     "@domain/": "./src/domain/",
+    "@shared/": "./src/shared/",
 
 
     "@prisma/client": "npm:@prisma/client@^6.2.1",
